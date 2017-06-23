@@ -1,5 +1,9 @@
 @import "variables.less";
 @import "../../../../../../web/bootstrap/less/mixins.less";
+@import "responsive.less";
+@import "mixins.less";
+@import "branch-navbar.less";
+@import "slideout.less";
 
 //
 // Common
@@ -15,83 +19,21 @@
 
 .ui-effects-transfer {
     border: 2px dotted black;
+    z-index: 900;
 }
 
 .btn-success .badge {
-  color: @btn-success-bg;
-  background-color: @btn-success-color;
+    color: @btn-success-bg;
+    background-color: @btn-success-color;
 }
 
 //
-// Header
+// Content Wrapper
 //
-header {
-    .make-row();
-    margin-top: @line-height-computed;
+.content-wrapper {
+    padding-top: 20px;
+    height: 100%;
 }
-
-#header-logo {
-    .make-md-column(3);
-    text-align: center;
-}
-
-#header-main {
-    .make-md-column(9);
-    .make-md-column-offset(3);
-
-    .panel-body {
-        padding: 0 15px !important;
-    }
-}
-
-#header-main-body {
-    .make-row();
-}
-
-#header-branch-name,
-#header-branch-occurrence,
-#header-cart {
-    .make-md-column(4);
-    padding: 5px 15px;
-
-    h1,
-    > strong {
-        display: block;
-        margin: 0;
-        font-size: @font-size-large;
-        font-weight: bold;
-        line-height: @line-height-base;
-
-        &.loading,
-        &.loading a {
-            color: @gray-light;
-        }
-    }
-}
-@media screen and (min-width: 992px) {
-    #header-branch-occurrence {
-        border-right: 1px solid @panel-default-border;
-        border-left: 1px solid @panel-default-border;
-    }
-}
-
-#header-branch-change-link {
-    display: block;
-    font-size: @font-size-small;
-}
-
-#header-branch-occurrence-order-from {
-    margin-bottom: @line-height-computed;
-    color: @brand-danger;
-    font-size: @font-size-large;
-    font-weight: bold;
-}
-
-#header-branch-occurrence-order-before {
-    color: @brand-danger;
-    font-size: @font-size-small;
-}
-
 
 //
 // Breadcrumb
@@ -169,10 +111,10 @@ header {
 // Producer
 //
 .producer_name_image {
-    margin-top : 10px;
-    margin-bottom : 10px;
-    fond-weight: bold;
-    fond-siez: 150em;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 150em;
 }
 
 .producer_image {
@@ -328,14 +270,14 @@ header {
 // Producer's attendances
 //
 .producers-show-attendance-container {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 
-  a {
-    width: 100%;
-  }
+    a {
+        width: 100%;
+    }
 }
 
 .dropdown-menu-right {
-  right: 0;
-  left: auto;
+    right: 0;
+    left: auto;
 }

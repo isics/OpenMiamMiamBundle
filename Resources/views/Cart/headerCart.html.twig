@@ -1,22 +1,38 @@
-{% if not cart.isClosed %}
-    {% if cart.nbItems > 0 %}
-        <strong>
-            {{ 'cart.title'|trans }}
-            <a href="{{ path('open_miam_miam.cart.show', {'branchSlug': branch.slug}) }}">
-                ({{ cart.nbItems }})
-                {{ cart.total|number_format_currency(open_miam_miam.currency) }}
+{#
+ # This file is part of the OpenMiamMiam project.
+ # (c) Isics <contact@isics.fr>
+ #
+ # This source file is subject to the AGPL v3 license that is bundled
+ # with this source code in the file LICENSE.
+ #}
+ <div class="cart-wrapper">
+    {% if not cart.isClosed %}
+        {% if cart.nbItems > 0 %}
+            <strong class="cart-title desktop-only">{{ 'cart.title'|trans }}</strong>
+            <a href="{{ path('open_miam_miam.cart.show', {'branchSlug': branch.slug}) }}" class="btn-cart has-item">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                <span class="cart-items-number">{{ cart.nbItems }}</span>
+                <span class="small-price">{{ cart.total|number_format_currency(open_miam_miam.currency) }}</span>
             </a>
-        </strong>
-        <a href="{{ path('open_miam_miam.cart.show', {'branchSlug': branch.slug}) }}" class="btn btn-primary btn-block">
+        {% else %}
+            <strong class="cart-title desktop-only">{{ 'cart.title'|trans }}</strong>
+            <span class="btn-cart">
             <span class="glyphicon glyphicon-shopping-cart"></span>
-            {{ 'cart.checkout'|trans }}
-        </a>
+            <span class="cart-items-number">0</span>
+            <span class="cart-empty desktop-only">{{ 'cart.empty'|trans }}</span>
+        </span>
+        {% endif %}
     {% else %}
-        <strong>{{ 'cart.title'|trans }} (0)</strong>
-        {{ 'cart.empty'|trans }}
+        <div class="desktop-only">
+            <strong>{{ 'cart.title'|trans }}</strong><br>
+            <span class="glyphicon glyphicon-time"></span>
+            {{ 'cart.order_closed'|trans }}
+        </div>
+        <div class="phone-only">
+            <div class="btn-cart disabled">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                <span class="cart-items-number">0</span>
+            </div>
+        </div>
     {% endif %}
-{% else %}
-    <strong>{{ 'cart.title'|trans }}</strong>
-    <span class="glyphicon glyphicon-time"></span>
-    {{ 'cart.order_closed'|trans }}
-{% endif %}
+</div>
