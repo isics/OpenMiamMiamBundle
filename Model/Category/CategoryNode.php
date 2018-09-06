@@ -36,6 +36,11 @@ class CategoryNode
      */
     protected $target;
 
+    /**
+     * @var integer $categoryType
+     */
+    protected $categoryType;
+
 
     /**
      * Constructor
@@ -53,6 +58,26 @@ class CategoryNode
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set category categoryType
+     *
+     * @param integer $categoryType
+     */
+    public function setCategoryType($categoryType)
+    {
+        $this->category->setCategoryType($categoryType);
+    }
+
+    /**
+     * Get category categoryType
+     *
+     * @return integer
+     */
+    public function getCategoryType()
+    {
+        return $this->category->getCategoryType();
     }
 
     /**

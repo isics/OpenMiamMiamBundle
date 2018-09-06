@@ -5,10 +5,18 @@ association.friends_of_organic_food: Les amis du bio
 branch.branch1: 'Comptoir #1'
 branch.branch2: 'Comptoir #2'
 
+# CategoryType
+category_type.none:             Aucun
+category_type.food:             Alimentaire
+category_type.household:        Produits ménager
+category_type.gardening:        Jardinage
+
 # Category
 category.beef:                  Bœuf
 category.dairy_produce:         Produits laitiers
 category.fruits_and_vegetables: Fruits et légumes
+category.household:             Produits d'intérieur
+category.gardening:             Jardinage
 category.lamb:                  Agneau
 category.meat:                  Viande
 category.pork:                  Porc
@@ -22,3 +30,7 @@ product.butter:               Beurre
 product.sugar:                Sucre
 product.plain_yoghurt:        Yahourt nature
 product.fruit_yoghurt:        Yahourt aux fruits
+product.washing-up_liquid:    Liquide vaisselle
+product.handkerchiefs:        Mouchoirs en tissu
+product.fertilizer:           Engrais
+product.tomato_seeds:         Graines de tomates

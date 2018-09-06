@@ -14,13 +14,12 @@ namespace Isics\Bundle\OpenMiamMiamBundle\DataFixtures\ORM;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Faker;
-use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\CategoryType;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class LoadBranchData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadCategoryTypeData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     /**
      * @var ContainerInterface
@@ -47,21 +46,12 @@ class LoadBranchData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function load(ObjectManager $manager)
     {
-        $faker = Faker\Factory::create();
-        $faker->addProvider(new Faker\Provider\fr_FR\Address($faker));
+        foreach (array('none', 'food', 'household', 'gardening') as $name) {
+            $type = new CategoryType();
+            $type->setName($this->translator->trans('category_type.' . $name, array(), 'fixtures'));
+            $this->addReference('category_type.' . $name, $type);
 
-        for ($i = 1; $i <= 2; $i++) {
-            $branch = new Branch();
-            $branch->setAssociation($this->getReference('association'));
-            $branch->setPresentation($faker->text);
-            $branch->setAddress1($faker->streetAddress);
-            $branch->setZipcode($faker->postcode);
-            $branch->setCity($faker->city);
-            $branch->setDepartmentNumber($faker->departmentNumber);
-
-            $manager->persist($branch);
-
-            $this->addReference('branch.branch'.$i, $branch);
+            $manager->persist($type);
         }
 
         $manager->flush();
@@ -72,6 +62,6 @@ class LoadBranchData extends AbstractFixture implements OrderedFixtureInterface,
      */
     public function getOrder()
     {
-        return 4;
+        return 1;
     }
 }
