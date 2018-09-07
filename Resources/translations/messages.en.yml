@@ -186,7 +186,7 @@ admin.super.menu.newsletter:  "Newsletter"
 admin.super.menu.consumer:    "Consumers"
 admin.super.menu.association: "Associations"
 admin.super.menu.producer:    "Producers"
-admin.super.menu.category:    "Product categoriers"
+admin.super.menu.category:    "Product categories"
 admin.super.menu.manager:     "Admin"
 
 # Admin / Super / Dashboard
