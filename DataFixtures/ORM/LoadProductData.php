@@ -101,6 +101,34 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
         $product->setAvailability(Product::AVAILABILITY_UNAVAILABLE);
         $productManager->save($product);
 
+        $product = $productManager->createForProducer($this->getReference('producer.beth_rave'));
+        $product->setName($this->translator->trans('product.washing-up_liquid', array(), 'fixtures'));
+        $product->setCategory($this->getReference('category.household'));
+        $product->setPrice(6);
+        $product->setAvailability(Product::AVAILABILITY_UNAVAILABLE);
+        $productManager->save($product);
+
+        $product = $productManager->createForProducer($this->getReference('producer.beth_rave'));
+        $product->setName($this->translator->trans('product.soap', array(), 'fixtures'));
+        $product->setCategory($this->getReference('category.household'));
+        $product->setPrice(3.2);
+        $product->setAvailability(Product::AVAILABILITY_UNAVAILABLE);
+        $productManager->save($product);
+
+        $product = $productManager->createForProducer($this->getReference('producer.elsa_dorsa'));
+        $product->setName($this->translator->trans('product.compost', array(), 'fixtures'));
+        $product->setCategory($this->getReference('category.gardening'));
+        $product->setPrice(4);
+        $product->setAvailability(Product::AVAILABILITY_UNAVAILABLE);
+        $productManager->save($product);
+
+        $product = $productManager->createForProducer($this->getReference('producer.romeo_frigo'));
+        $product->setName($this->translator->trans('product.tomato_seeds', array(), 'fixtures'));
+        $product->setCategory($this->getReference('category.gardening'));
+        $product->setPrice(.6);
+        $product->setAvailability(Product::AVAILABILITY_UNAVAILABLE);
+        $productManager->save($product);
+
         $manager->flush();
     }
 
@@ -109,6 +137,6 @@ class LoadProductData extends AbstractFixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 6;
+        return 7;
     }
 }

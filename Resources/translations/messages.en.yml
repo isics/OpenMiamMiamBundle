@@ -27,6 +27,9 @@ my_sales_orders:      "My sales orders"
 artificial_product:   "Various product"
 catalog:              "Catalog"
 
+# Category Type
+category_type.default:     "Default"
+
 # Hompage
 homepage.map.title:        "Choose a branch near by you:"
 homepage.map.branches:     "Branch :"
@@ -290,22 +293,24 @@ newsletter.unsubscribe:     |
     </p>
 
 # Admin / Super / Category
-admin.super.category.list.title:               "Product categories"
-admin.super.category.list.create:              "Create category"
-admin.super.category.list.no_category:         "No category"
-admin.super.category.list.name:                "Name"
-admin.super.category.list.edit:                "Edit category"
-admin.super.category.list.delete:              "Delete category"
-admin.super.category.form.new_title:           "New category"
-admin.super.category.form.edit_title:          "Category «%name%»"
-admin.super.category.form.name:                "Name"
-admin.super.category.form.position:            "Position"
-admin.super.category.form.target:              "Target"
-admin.super.category.message.created:          "Category has been created"
-admin.super.category.message.updated:          "Category has been modified"
-admin.super.category.message.deleted:          "Category has been deleted"
-admin.super.category.message.unable_to_delete: "Impossible to delete this category because some categories or products are associated"
-admin.super.category.delete_dialog.content:    "Are your sure to want to delete this category?"
+admin.super.category.list.title:                "Product categories"
+admin.super.category.list.create:               "Create category"
+admin.super.category.list.no_category:          "No category"
+admin.super.category.list.name:                 "Name"
+admin.super.category.list.edit:                 "Edit category"
+admin.super.category.list.delete:               "Delete category"
+admin.super.category.form.new_title:            "New category"
+admin.super.category.form.edit_title:           "Category «%name%»"
+admin.super.category.form.name:                 "Name"
+admin.super.category.form.position:             "Position"
+admin.super.category.form.target:               "Target"
+admin.super.category.form.category_type:        "Type"
+admin.super.category.message.created:           "Category has been created"
+admin.super.category.message.updated:           "Category has been modified"
+admin.super.category.message.deleted:           "Category has been deleted"
+admin.super.category.message.unable_to_delete:  "Impossible to delete this category because some categories or products are associated"
+admin.super.category.delete_dialog.content:     "Are your sure to want to delete this category?"
+
 
 # Admin / Super / Manager
 admin.super.manager.title:              "{0} No administrator|{1} 1 administrator|]1,Inf] %nb% administrators"

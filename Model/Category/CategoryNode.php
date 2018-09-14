@@ -12,6 +12,7 @@
 namespace Isics\Bundle\OpenMiamMiamBundle\Model\Category;
 
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Category;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\CategoryType;
 
 class CategoryNode
 {
@@ -53,6 +54,26 @@ class CategoryNode
     public function getCategory()
     {
         return $this->category;
+    }
+
+    /**
+     * Set category Type
+     *
+     * @param CategoryType $categoryType
+     */
+    public function setCategoryType(CategoryType $categoryType = null)
+    {
+        $this->category->setCategoryType($categoryType);
+    }
+
+    /**
+     * Get category Type
+     *
+     * @return integer
+     */
+    public function getCategoryType()
+    {
+        return $this->category->getCategoryType();
     }
 
     /**

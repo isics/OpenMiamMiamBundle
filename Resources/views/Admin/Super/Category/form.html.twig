@@ -13,8 +13,8 @@
 {{ form_start(form, {'attr': {'id': 'open_miam_miam_admin_category_form'}}) }}
 
     {{ form_errors(form) }}
-
     {{ form_row(form.name, {'label': 'admin.super.category.form.name'|trans}) }}
+    {{ form_row(form.categoryType, {'label': 'admin.super.category.form.category_type'|trans, 'placeholder' : 'category_type.default'|trans}) }}
 
     {% if form.position is defined %}
         <div class="row">
@@ -29,13 +29,15 @@
 
     <a href="{{ path('open_miam_miam.admin.super.category.list') }}" class="pull-right">{{ 'admin.return'|trans }}</a>
 
-    <button type="submit" class="btn btn-primary btn-lg" />
+    <button type="submit" class="btn btn-primary btn-lg"/>
         <span class="glyphicon glyphicon-floppy-save"></span>
         {{ 'admin.save'|trans }}
     </button>
     {% do form.save.setRendered %}
 
     {% if categoryNode.category.id is not null %}
-        <a data-url="{{ path('open_miam_miam.admin.super.category.delete', {'categoryId': categoryNode.category.id}) }}" class="btn btn-danger btn-lg" title="{{ 'admin.super.category.form.delete'|trans }}" data-toggle="modal" href="#delete-dialog"><span class="glyphicon glyphicon-trash"></span></a>
+        <a data-url="{{ path('open_miam_miam.admin.super.category.delete', {'categoryId': categoryNode.category.id}) }}"
+           class="btn btn-danger btn-lg" title="{{ 'admin.super.category.form.delete'|trans }}" data-toggle="modal"
+           href="#delete-dialog"><span class="glyphicon glyphicon-trash"></span></a>
     {% endif %}
 {{ form_end(form) }}

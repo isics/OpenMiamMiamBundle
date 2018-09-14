@@ -29,7 +29,12 @@ class CategoryType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', TextType::class);
+        $builder->add('name', TextType::class)
+                ->add('categoryType', EntityType::class, array(
+                    'class'         => 'IsicsOpenMiamMiamBundle:CategoryType',
+                    'choice_label'  => 'name',
+                    'required' => false,
+                ));
 
         if (!$options['data']->isRoot()) {
             $builder->add('position', ChoiceType::class, array(

@@ -5,10 +5,17 @@ association.friends_of_organic_food: Friends of organic food
 branch.branch1: 'Branch #1'
 branch.branch2: 'Branch #2'
 
+# CategoryType
+category_type.food:             Food
+category_type.household:        Household
+category_type.gardening:        Gardening
+
 # Category
 category.beef:                  Beef
 category.dairy_produce:         Dairy produce
 category.fruits_and_vegetables: Fruits and vegetables
+category.household:             Household
+category.gardening:             Gardening
 category.lamb:                  Lamb
 category.meat:                  Meat
 category.pork:                  Pork
@@ -22,3 +29,7 @@ product.butter:               Butter
 product.sugar:                Sugar
 product.plain_yoghurt:        Plain yoghurt
 product.fruit_yoghurt:        Fruit yoghurt
+product.washing_up_liquid:    Washing-up liquid
+product.soap:                 Soap
+product.compost:              Compost
+product.tomato_seeds:         Tomato seeds

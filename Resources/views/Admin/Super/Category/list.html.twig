@@ -25,6 +25,7 @@
             <table class="table table-bordered table-condensed table-striped table-categories">
                 <thead>
                     <tr>
+                        <th>Type</th>
                         <th>{{ 'admin.super.category.list.name'|trans }}</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -32,6 +33,13 @@
                 <tbody>
                     {% for category in categories %}
                         <tr>
+                            <td>
+                                {% if category.categoryType %}
+                                    {{ category.categoryType.name|capitalize }}
+                                {% else %}
+                                     {{ 'category_type.default'|trans }}
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if category.lvl > 0 %}{% for i in 1..category.lvl %}<span class="indent"></span>{% endfor %}{% endif %}
                                 <a href="{{ path('open_miam_miam.admin.super.category.edit', {'categoryId': category.id}) }}">{{ category.name }}</a>
