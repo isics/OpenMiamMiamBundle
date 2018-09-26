@@ -27,6 +27,7 @@ parameters:
     open_miam_miam.acl_manager.class:                      'Isics\Bundle\OpenMiamMiamBundle\Manager\AclManager'
     open_miam_miam.article_manager.class:                  'Isics\Bundle\OpenMiamMiamBundle\Manager\ArticleManager'
     open_miam_miam.product_manager.class:                  'Isics\Bundle\OpenMiamMiamBundle\Manager\ProductManager'
+    open_miam_miam.product_matching_manager.class:         'Isics\Bundle\OpenMiamMiamBundle\Manager\ProductMatchingManager'
     open_miam_miam.association_manager.class:              'Isics\Bundle\OpenMiamMiamBundle\Manager\AssociationManager'
     open_miam_miam.association_has_producer_manager.class: 'Isics\Bundle\OpenMiamMiamBundle\Manager\AssociationHasProducerManager'
     open_miam_miam.producer_manager.class:                 'Isics\Bundle\OpenMiamMiamBundle\Manager\ProducerManager'
@@ -300,6 +301,10 @@ services:
     open_miam_miam.product_manager:
         class: %open_miam_miam.product_manager.class%
         arguments: [%open_miam_miam.product%, '@doctrine.orm.entity_manager', '@kernel', '@open_miam_miam.activity_manager']
+
+    open_miam_miam.product_matching_manager:
+        class: %open_miam_miam.product_matching_manager.class%
+        arguments: ['@doctrine.orm.entity_manager']
 
     open_miam_miam.association_manager:
         class: %open_miam_miam.association_manager.class%
