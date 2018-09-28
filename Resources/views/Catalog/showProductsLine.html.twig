@@ -13,11 +13,8 @@
     {% set colClass = 'col-md-4' %}
 {% endif %}
 
-<div id="products-of-the-moment">
+<div id="{{ cssId }}" class="products-line">
     <h2>{{ title|trans }}</h2>
-    {% if desc is defined %}
-        <p>{{ desc|trans }}</p>
-    {% endif %}
 
     <div class="row">
         {% set showNoPriceStatement = false %}

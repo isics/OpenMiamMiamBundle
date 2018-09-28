@@ -95,7 +95,7 @@
 
         {% include 'IsicsOpenMiamMiamBundle:Catalog:productDescription.html.twig' with {'product': product} %}
 
-        {{ render(controller('IsicsOpenMiamMiamBundle:Catalog:showMatchingProducts', {'branch': branch, 'productId': product.id})) }}
+        {{ render(controller('IsicsOpenMiamMiamBundle:Catalog:showMatchingProducts', {'branch': branch, 'product': product})) }}
 
         {% if showNoPriceStatement %}
             {% include 'IsicsOpenMiamMiamBundle:Branch:noPriceStatement.html.twig' %}

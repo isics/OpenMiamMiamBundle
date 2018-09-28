@@ -13,8 +13,8 @@ namespace Isics\Bundle\OpenMiamMiamBundle\Controller;
 
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Category;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\Product;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\ProductMatching;
-use Isics\Bundle\OpenMiamMiamBundle\Model\Cart\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -127,65 +127,63 @@ class CatalogController extends Controller
             ->findOfTheMomentForBranchOccurrence($branchOccurrenceManager->getNext($branch), $limit);
 
         $nbProducts = count($products);
-        $title = 'zone.products_of_the_moment.title';
 
         if (0 === $nbProducts) {
             return new Response();
         }
 
-        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsOfTheMoment.html.twig', array(
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsLine.html.twig', array(
+            'cssId'      => 'products-of-the-moment',
+            'title'      => 'zone.products_of_the_moment.title',
             'branch'     => $branch,
             'products'   => $products,
             'nbProducts' => $nbProducts,
-            'title'      => $title,
         ));
     }
 
     /**
-     * Shows products matching with the current product
+     * Shows products matching with one product or all products in cart
      *
      * @param Branch  $branch
-     * @param integer $productId
+     * @param Product $product
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showMatchingProductsAction(Branch $branch, $productId = null)
+    public function showMatchingProductsAction(Branch $branch, Product $product = null)
     {
         $cart = $this->container->get('open_miam_miam.cart_manager')->get($branch);
-        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
-
-        $idsInCart = array();
-        foreach ($cart->getItems() as $key => $value) {
-            array_push($idsInCart, $key);
+        $productsInCart = [];
+        foreach ($cart->getItems() as $item) {
+            $productsInCart[] = $item->getProduct();
         }
-        
-        if ($productId === null) {
-            $productId = $idsInCart;
 
-            if (count($productId) > 1) {
-                $desc = 'zone.matching_products.description.plural';
-            } else {
-                $desc = 'zone.matching_products.description.singular';
-            }
+        if ($product === null) {
+            $products = $productsInCart;
+            $excludedProducts = [];
         } else {
-            $desc = 'zone.matching_products.description.singular';
+            $products = [$product];
+            $excludedProducts = $productsInCart;
         }
 
-        $matchingProducts = $this->getDoctrine()->getRepository(ProductMatching::class)->findMatchingProducts(array($productId), $branchOccurrence, $idsInCart);
+        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
+        $matchingProducts = $this->getDoctrine()->getRepository(ProductMatching::class)->findMatchingProducts(
+            $products,
+            $branchOccurrence,
+            $excludedProducts
+        );
 
-        $nbMatches = count($matchingProducts);
-        $title = 'zone.matching_products.title';
+        $nbProducts = count($matchingProducts);
 
-        if (0 === $nbMatches) {
+        if (0 === $nbProducts) {
             return new Response();
         }
 
-        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsOfTheMoment.html.twig', array(
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsLine.html.twig', [
+            'cssId'      => 'matching-products',
+            'title'      => 'zone.matching_products.title',
             'branch'     => $branch,
             'products'   => $matchingProducts,
-            'nbProducts' => $nbMatches,
-            'title'      => $title,
-            'desc'       => $desc,
-        ));
+            'nbProducts' => $nbProducts,
+        ]);
     }
 }
