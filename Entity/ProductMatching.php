@@ -37,7 +37,7 @@ class ProductMatching
 
     /**
      * @var Product $product
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id", nullable=false)
      */
@@ -45,7 +45,7 @@ class ProductMatching
 
     /**
      * @var Product $matchingProduct
-     * 
+     *
      * @ORM\ManyToOne(targetEntity="Product")
      * @ORM\JoinColumn(name="matching_product_id", referencedColumnName="id", nullable=false)
      */
@@ -53,7 +53,7 @@ class ProductMatching
 
     /**
      * @var integer $nbCommonOrders
-     * 
+     *
      * @ORM\Column(name="nb_common_orders", type="integer", nullable=false)
      */
     private $nbCommonOrders;
@@ -63,7 +63,7 @@ class ProductMatching
      *
      * @return integer
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -75,7 +75,7 @@ class ProductMatching
      *
      * @return ProductMatching
      */
-    public function setProduct($product)
+    public function setProduct(Product $product)
     {
         $this->product = $product;
 
@@ -87,7 +87,7 @@ class ProductMatching
      *
      * @return Product
      */
-    public function getProduct()
+    public function getProduct(): Product
     {
         return $this->product;
     }
@@ -99,7 +99,7 @@ class ProductMatching
      *
      * @return ProductMatching
      */
-    public function setMatchingProduct($matchingProduct)
+    public function setMatchingProduct(Product $matchingProduct)
     {
         $this->matchingProduct = $matchingProduct;
 
@@ -111,7 +111,7 @@ class ProductMatching
      *
      * @return Product
      */
-    public function getMatchingProduct()
+    public function getMatchingProduct(): Product
     {
         return $this->matchingProduct;
     }
@@ -123,7 +123,7 @@ class ProductMatching
      *
      * @return integer
      */
-    public function setNbCommonOrders($nbCommonOrders)
+    public function setNbCommonOrders(int $nbCommonOrders)
     {
         $this->nbCommonOrders = $nbCommonOrders;
 
@@ -135,7 +135,7 @@ class ProductMatching
      *
      * @return integer
      */
-    public function getNbCommonOrders()
+    public function getNbCommonOrders(): int
     {
         return $this->nbCommonOrders;
     }
