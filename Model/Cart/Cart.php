@@ -243,6 +243,4 @@ class Cart implements \Serializable
 
         $this->items = $data['items'];
     }
-
-
 }

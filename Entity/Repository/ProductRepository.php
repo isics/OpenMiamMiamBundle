@@ -14,6 +14,7 @@ namespace Isics\Bundle\OpenMiamMiamBundle\Entity\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Query;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Association;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\BranchOccurrence;
@@ -279,5 +280,27 @@ class ProductRepository extends EntityRepository
                 ->getSingleResult();
 
         return $result['counter'];
+    }
+
+    /**
+     * Returns all products ids by iteration
+     * 
+     * @return IterableResult
+     */
+    public function findAllId()
+    {
+       return $this->createQueryBuilder('p')->select('p.id')
+                        ->getQuery()
+                        ->iterate([], Query::HYDRATE_SCALAR);
+    }
+
+    /**
+     * Returns count products
+     *
+     * @return integer
+     */
+    public function count()
+    {
+       return (int) $this->createQueryBuilder('p')->select('COUNT(p)')->getQuery()->getSingleScalarResult();
     }
 }

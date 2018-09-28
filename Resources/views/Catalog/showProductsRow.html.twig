@@ -13,8 +13,8 @@
     {% set colClass = 'col-md-4' %}
 {% endif %}
 
-<div id="products-of-the-moment">
-    <h2>{{ 'zone.products_of_the_moment.title'|trans }}</h2>
+<div id="{{ cssId }}" class="products-row">
+    <h2>{{ title|trans }}</h2>
 
     <div class="row">
         {% set showNoPriceStatement = false %}

@@ -58,6 +58,7 @@ zone.welcome.more:                 "more"
 zone.news.title:                   "News"
 zone.news.link:                    "All the news"
 zone.products_of_the_moment.title: "Featured"
+zone.matching_products.title:      "Consumers love those products too"
 zone.footer.admin_link:            "Admin access"
 
 # Branch

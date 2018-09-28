@@ -13,6 +13,8 @@ namespace Isics\Bundle\OpenMiamMiamBundle\Controller;
 
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Category;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\Product;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\ProductMatching;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -130,10 +132,58 @@ class CatalogController extends Controller
             return new Response();
         }
 
-        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsOfTheMoment.html.twig', array(
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsRow.html.twig', array(
+            'cssId'      => 'products-of-the-moment',
+            'title'      => 'zone.products_of_the_moment.title',
             'branch'     => $branch,
             'products'   => $products,
             'nbProducts' => $nbProducts,
         ));
+    }
+
+    /**
+     * Shows products matching with one product or all products in cart
+     *
+     * @param Branch  $branch
+     * @param Product $product
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showMatchingProductsAction(Branch $branch, Product $product = null)
+    {
+        $cart = $this->container->get('open_miam_miam.cart_manager')->get($branch);
+        $productsInCart = [];
+        foreach ($cart->getItems() as $item) {
+            $productsInCart[] = $item->getProduct();
+        }
+
+        if ($product === null) {
+            $products = $productsInCart;
+            $excludedProducts = [];
+        } else {
+            $products = [$product];
+            $excludedProducts = $productsInCart;
+        }
+
+        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
+        $matchingProducts = $this->getDoctrine()->getRepository(ProductMatching::class)->findMatchingProducts(
+            $products,
+            $branchOccurrence,
+            $excludedProducts
+        );
+
+        $nbMatchingProducts = count($matchingProducts);
+
+        if (0 === $nbMatchingProducts) {
+            return new Response();
+        }
+
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsRow.html.twig', [
+            'cssId'      => 'matching-products',
+            'title'      => 'zone.matching_products.title',
+            'branch'     => $branch,
+            'products'   => $matchingProducts,
+            'nbProducts' => $nbMatchingProducts,
+        ]);
     }
 }
