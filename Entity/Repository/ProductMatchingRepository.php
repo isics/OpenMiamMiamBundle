@@ -69,18 +69,19 @@ class ProductMatchingRepository extends EntityRepository
             JOIN sales_order_row AS sor2 ON (sor2.sales_order_id = sor1.sales_order_id)
             JOIN product as p1 ON p1.id = sor1.product_id
             JOIN category AS cat1 ON p1.category_id = cat1.id
-            JOIN category_type AS ctt1 ON cat1.category_type_id = ctt1.id
-
             JOIN product as p2 ON p2.id = sor2.product_id
             JOIN category AS cat2 ON p2.category_id = cat2.id
-            JOIN category_type AS ctt2 ON cat2.category_type_id = ctt2.id
-
             WHERE sor1.product_id != sor2.product_id
             AND sor2.product_id = :id
-            AND ctt1.id = ctt2.id
+            AND (
+                cat1.category_type_id = cat2.category_type_id
+                OR
+                cat1.category_type_id IS NULL AND cat2.category_type_id IS NULL
+            )
             GROUP BY product_id, matching_product_id
             ORDER BY product_id, nb_common_orders DESC
 SQL;
+
         $stmt2 = $conn->prepare($insertQuery);
         $stmt2->bindParam('id', $productId);
         $stmt2->execute();
