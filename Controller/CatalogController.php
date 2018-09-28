@@ -126,18 +126,18 @@ class CatalogController extends Controller
         $products = $this->getDoctrine()->getRepository('IsicsOpenMiamMiamBundle:Product')
             ->findOfTheMomentForBranchOccurrence($branchOccurrenceManager->getNext($branch), $limit);
 
-        $nbMatchingProducts = count($products);
+        $nbProducts = count($products);
 
-        if (0 === $nbMatchingProducts) {
+        if (0 === $nbProducts) {
             return new Response();
         }
 
-        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsLine.html.twig', array(
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsRow.html.twig', array(
             'cssId'      => 'products-of-the-moment',
             'title'      => 'zone.products_of_the_moment.title',
             'branch'     => $branch,
             'products'   => $products,
-            'nbProducts' => $nbMatchingProducts,
+            'nbProducts' => $nbProducts,
         ));
     }
 
@@ -172,18 +172,18 @@ class CatalogController extends Controller
             $excludedProducts
         );
 
-        $nbProducts = count($matchingProducts);
+        $nbMatchingProducts = count($matchingProducts);
 
-        if (0 === $nbProducts) {
+        if (0 === $nbMatchingProducts) {
             return new Response();
         }
 
-        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsLine.html.twig', [
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsRow.html.twig', [
             'cssId'      => 'matching-products',
             'title'      => 'zone.matching_products.title',
             'branch'     => $branch,
             'products'   => $matchingProducts,
-            'nbProducts' => $nbProducts,
+            'nbProducts' => $nbMatchingProducts,
         ]);
     }
 }
