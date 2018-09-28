@@ -13,6 +13,8 @@ namespace Isics\Bundle\OpenMiamMiamBundle\Controller;
 
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Category;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\ProductMatching;
+use Isics\Bundle\OpenMiamMiamBundle\Model\Cart\Cart;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,7 +85,7 @@ class CatalogController extends Controller
     public function showProductAction(Branch $branch, $productSlug, $productId)
     {
         $product = $this->getDoctrine()->getRepository('IsicsOpenMiamMiamBundle:Product')
-            ->findOneByIdAndVisibleInBranch($productId, $branch);
+                        ->findOneByIdAndVisibleInBranch($productId, $branch);
 
         if (null === $product) {
             throw new NotFoundHttpException('Product not found');
@@ -125,6 +127,7 @@ class CatalogController extends Controller
             ->findOfTheMomentForBranchOccurrence($branchOccurrenceManager->getNext($branch), $limit);
 
         $nbProducts = count($products);
+        $title = 'zone.products_of_the_moment.title';
 
         if (0 === $nbProducts) {
             return new Response();
@@ -134,6 +137,55 @@ class CatalogController extends Controller
             'branch'     => $branch,
             'products'   => $products,
             'nbProducts' => $nbProducts,
+            'title'      => $title,
+        ));
+    }
+
+    /**
+     * Shows products matching with the current product
+     *
+     * @param Branch  $branch
+     * @param integer $productId
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showMatchingProductsAction(Branch $branch, $productId = null)
+    {
+        $cart = $this->container->get('open_miam_miam.cart_manager')->get($branch);
+        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
+
+        $idsInCart = array();
+        foreach ($cart->getItems() as $key => $value) {
+            array_push($idsInCart, $key);
+        }
+        
+        if ($productId === null) {
+            $productId = $idsInCart;
+
+            if (count($productId) > 1) {
+                $desc = 'zone.matching_products.description.plural';
+            } else {
+                $desc = 'zone.matching_products.description.singular';
+            }
+        } else {
+            $desc = 'zone.matching_products.description.singular';
+        }
+
+        $matchingProducts = $this->getDoctrine()->getRepository(ProductMatching::class)->findMatchingProducts(array($productId), $branchOccurrence, $idsInCart);
+
+        $nbMatches = count($matchingProducts);
+        $title = 'zone.matching_products.title';
+
+        if (0 === $nbMatches) {
+            return new Response();
+        }
+
+        return $this->render('IsicsOpenMiamMiamBundle:Catalog:showProductsOfTheMoment.html.twig', array(
+            'branch'     => $branch,
+            'products'   => $matchingProducts,
+            'nbProducts' => $nbMatches,
+            'title'      => $title,
+            'desc'       => $desc,
         ));
     }
 }

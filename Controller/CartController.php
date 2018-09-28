@@ -13,6 +13,7 @@ namespace Isics\Bundle\OpenMiamMiamBundle\Controller;
 
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Branch;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Product;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\ProductMatching;
 use Isics\Bundle\OpenMiamMiamBundle\Form\Type\CartItemType;
 use Isics\Bundle\OpenMiamMiamBundle\Form\Type\CartType;
 use Isics\Bundle\OpenMiamMiamBundle\Model\Cart\Cart;
