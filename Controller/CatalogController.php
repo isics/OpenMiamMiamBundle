@@ -151,6 +151,11 @@ class CatalogController extends Controller
      */
     public function showMatchingProductsAction(Branch $branch, Product $product = null)
     {
+        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
+        if ($branchOccurrence === null) {
+            return new Response();
+        }
+
         $cart = $this->container->get('open_miam_miam.cart_manager')->get($branch);
         $productsInCart = [];
         foreach ($cart->getItems() as $item) {
@@ -165,7 +170,6 @@ class CatalogController extends Controller
             $excludedProducts = $productsInCart;
         }
 
-        $branchOccurrence = $this->container->get('open_miam_miam.branch_occurrence_manager')->getNext($branch);
         $matchingProducts = $this->getDoctrine()->getRepository(ProductMatching::class)->findMatchingProducts(
             $products,
             $branchOccurrence,
