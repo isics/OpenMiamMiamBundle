@@ -59,7 +59,7 @@ class ProductMatchingRepository extends EntityRepository
 
         $deleteQuery = 'DELETE FROM product_matching WHERE product_id = :id';
         $stmt = $conn->prepare($deleteQuery);
-        $stmt->bindParam('id', $id);
+        $stmt->bindParam('id', $productId);
         $stmt->execute();
 
         $insertQuery = <<<SQL
@@ -82,7 +82,7 @@ class ProductMatchingRepository extends EntityRepository
             ORDER BY product_id, nb_common_orders DESC
 SQL;
         $stmt2 = $conn->prepare($insertQuery);
-        $stmt2->bindParam('id', $id);
+        $stmt2->bindParam('id', $productId);
         $stmt2->execute();
     }
 }

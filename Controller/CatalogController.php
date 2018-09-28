@@ -85,7 +85,7 @@ class CatalogController extends Controller
     public function showProductAction(Branch $branch, $productSlug, $productId)
     {
         $product = $this->getDoctrine()->getRepository('IsicsOpenMiamMiamBundle:Product')
-                        ->findOneByIdAndVisibleInBranch($productId, $branch);
+            ->findOneByIdAndVisibleInBranch($productId, $branch);
 
         if (null === $product) {
             throw new NotFoundHttpException('Product not found');
@@ -126,9 +126,9 @@ class CatalogController extends Controller
         $products = $this->getDoctrine()->getRepository('IsicsOpenMiamMiamBundle:Product')
             ->findOfTheMomentForBranchOccurrence($branchOccurrenceManager->getNext($branch), $limit);
 
-        $nbProducts = count($products);
+        $nbMatchingProducts = count($products);
 
-        if (0 === $nbProducts) {
+        if (0 === $nbMatchingProducts) {
             return new Response();
         }
 
@@ -137,7 +137,7 @@ class CatalogController extends Controller
             'title'      => 'zone.products_of_the_moment.title',
             'branch'     => $branch,
             'products'   => $products,
-            'nbProducts' => $nbProducts,
+            'nbProducts' => $nbMatchingProducts,
         ));
     }
 
