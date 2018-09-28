@@ -38,10 +38,10 @@ class ProductMatchingRepository extends EntityRepository
             ->innerJoin('IsicsOpenMiamMiamBundle:ProductMatching', 'pm', 'WITH', 'pm.matchingProduct = p')
             ->andWhere('pm.product IN (:products)')
             ->andWhere('pm.matchingProduct NOT IN (:excludedProducts)')
+            ->distinct()
             ->orderBy('pm.nbCommonOrders', 'DESC')
             ->setParameter('products', $products)
             ->setParameter('excludedProducts', array_merge($products, $excludedProducts))
-            ->distinct()
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
