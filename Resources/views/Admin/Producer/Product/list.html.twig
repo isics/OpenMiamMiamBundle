@@ -34,6 +34,7 @@
                             <th>{{ branch.name|truncate(8) }}</th>
                         {% endfor %}
                         <th>{{ 'admin.producer.products.list.availability'|trans }}</th>
+                        <th>Complétion du formulaire</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -62,6 +63,15 @@
                                     {% endif  %}
                                 {% endif %}
                             </td>
+                            <td>
+                                <div class="progress-stuff">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
+                                    </div>
+                                    <span class="glyphicon glyphicon-ok table-glyph" style="color: #4BB543;" title="Le formulaire a bien été complété"></span>
+                                </div>
+                            </td>
+
                             <td>
                                 <a href="{{ path('open_miam_miam.admin.producer.product.edit', {'id': producer.id, 'productId': product.id}) }}" class="btn btn-primary btn-xs" title="{{ 'admin.producer.products.list.edit'|trans }}"><span class="glyphicon glyphicon-pencil"></span></a>
                                 <a data-url="{{ path('open_miam_miam.admin.producer.product.delete', {'id': producer.id, 'productId': product.id}) }}" class="btn btn-danger btn-xs" title="{{ 'admin.producer.products.list.delete'|trans }}" data-toggle="modal" href="#delete-dialog"><span class="glyphicon glyphicon-trash"></span></a>
