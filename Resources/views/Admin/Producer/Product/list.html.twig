@@ -34,7 +34,7 @@
                             <th>{{ branch.name|truncate(8) }}</th>
                         {% endfor %}
                         <th>{{ 'admin.producer.products.list.availability'|trans }}</th>
-                        <th>Complétion du formulaire</th>
+                        <th>{{ 'admin.producer.products.list.completeness' |trans}}</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -68,7 +68,7 @@
                                     <div class="progress">
                                         <div class="progress-bar progress-bar-success" role="progressbar" style="width: 100%;" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100%</div>
                                     </div>
-                                    <span class="glyphicon glyphicon-ok table-glyph" style="color: #4BB543;" title="Le formulaire a bien été complété"></span>
+                                    <span class="glyphicon glyphicon-ok table-glyph" style="color: #4BB543;" title="{{ 'admin.producer.products.list.completeness_quality_1' |trans }}"></span>
                                 </div>
                             </td>
 
