@@ -196,6 +196,11 @@ class Product
     private $completeness;
 
     /**
+     * @ORM\ManyToOne(targetEntity="ProductInsight")
+     */
+    private $insights;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -768,5 +773,15 @@ class Product
     public function getCompleteness()
     {
         return $this->completeness;
+    }
+
+    /**
+     * Get insights
+     *
+     * @return ProductInsight[]
+     */
+    public function getProductInsights()
+    {
+      return $this->insights;
     }
 }
