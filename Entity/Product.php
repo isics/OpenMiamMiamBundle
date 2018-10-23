@@ -188,6 +188,19 @@ class Product
      */
     private $branches;
 
+    /**
+      * @var integer $completeness
+      *
+      * @ORM\Column(name="completeness", type="integer", nullable=true)
+      */
+    private $completeness;
+
+    /**
+      * @var integer $completeness_quality
+      *
+      * @ORM\Column(name="completeness_quality", type="integer", nullable=true)
+      */
+    private $completeness_quality;
 
     /**
      * Constructor
@@ -201,6 +214,7 @@ class Product
         $this->availability         = self::AVAILABILITY_AVAILABLE;
         $this->hasNoPrice           = (null === $this->id) ? false : (null === $this->price);
         $this->branches             = new ArrayCollection();
+        $this->completeness         = 4;
     }
 
     /**
@@ -738,4 +752,53 @@ class Product
 
         return false;
     }
+
+    /**
+     * Set completeness
+     *
+     * @param integer $completeness
+     *
+     * @return Product
+     */
+    public function setCompleteness($completeness)
+    {
+        $this->completeness = $completeness;
+
+        return $this;
+    }
+
+    /**
+     * Get completeness
+     *
+     * @return integer
+     */
+    public function getCompleteness()
+    {
+        return $this->completeness;
+    }
+
+    /**
+     * Set completeness quality
+     *
+     * @param integer $completeness
+     *
+     * @return Product
+     */
+    public function setCompletenessQuality($completeness_quality)
+    {
+        $this->completeness_quality = $completeness_quality;
+
+        return $this;
+    }
+
+    /**
+     * Get completeness quality
+     *
+     * @return integer
+     */
+    public function getCompletenessQuality()
+    {
+        return $this->completeness_quality;
+    }
+
 }
