@@ -196,13 +196,6 @@ class Product
     private $completeness;
 
     /**
-      * @var integer $completeness_quality
-      *
-      * @ORM\Column(name="completeness_quality", type="integer", nullable=true)
-      */
-    private $completeness_quality;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -776,29 +769,4 @@ class Product
     {
         return $this->completeness;
     }
-
-    /**
-     * Set completeness quality
-     *
-     * @param integer $completeness
-     *
-     * @return Product
-     */
-    public function setCompletenessQuality($completeness_quality)
-    {
-        $this->completeness_quality = $completeness_quality;
-
-        return $this;
-    }
-
-    /**
-     * Get completeness quality
-     *
-     * @return integer
-     */
-    public function getCompletenessQuality()
-    {
-        return $this->completeness_quality;
-    }
-
 }
