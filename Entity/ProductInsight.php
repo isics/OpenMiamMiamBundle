@@ -115,7 +115,7 @@ class ProductInsight
     /**
      * Get code
      *
-     * @return integer 
+     * @return integer
      */
     public function getCode()
     {

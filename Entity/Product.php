@@ -196,7 +196,7 @@ class Product
     private $completeness;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ProductInsight")
+     * @ORM\OneToMany(targetEntity="ProductInsight", mappedBy="product", cascade={"persist"})
      */
     private $insights;
 
@@ -212,7 +212,8 @@ class Product
         $this->availability         = self::AVAILABILITY_AVAILABLE;
         $this->hasNoPrice           = (null === $this->id) ? false : (null === $this->price);
         $this->branches             = new ArrayCollection();
-        $this->completeness         = 4;
+        $this->completeness         = 7;
+        $this->insights             = new ArrayCollection();
     }
 
     /**
@@ -773,6 +774,11 @@ class Product
     public function getCompleteness()
     {
         return $this->completeness;
+    }
+
+    public function addProductInsight(ProductInsight $insight)
+    {
+        $this->insights->add($insight);
     }
 
     /**
