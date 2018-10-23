@@ -31,9 +31,20 @@ class FillCompletenessCommand extends ContainerAwareCommand
           {
               $completeness++;
 
+              if (strlen($product->getDescription()) < 10)
+              {
+                  $insight = new ProductInsight();
+                  $insight->setType("QUALITY");
+                  $insight->setCode(4);
+                  $insight->setProductId($product->getId());
+                  $product->addProductInsight($insight);
+              }
+
               if ($product->getImage())
               {
                   $completeness++;
+
+                  // Image quality detection here
 
                   if ($product->getPriceInfo())
                   {
@@ -71,17 +82,19 @@ class FillCompletenessCommand extends ContainerAwareCommand
 
              if (!$product->getPriceInfo())
              {
-               $insight = new ProductInsight();
-               $insight->setType("COMPLETENESS");
-               $insight->setCode(3);
-               $insight->setProductId($product->getId());
-               $product->addProductInsight($insight);
+                 $insight = new ProductInsight();
+                 $insight->setType("COMPLETENESS");
+                 $insight->setCode(3);
+                 $insight->setProductId($product->getId());
+                 $product->addProductInsight($insight);
              }
           }
           $product->setCompleteness($completeness);
           $this->getContainer()->get('doctrine')->getManager()->flush();
           $completeness = 7;
         }
+
+        $output->writeln("<success> - Finished");
     }
 
 }
