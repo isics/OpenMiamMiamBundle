@@ -790,4 +790,14 @@ class Product
     {
       return $this->insights;
     }
+
+    /**
+     * Has Insights
+     *
+     * @return string
+     */
+    public function hasProductInsights()
+    {
+        return "Hello";
+    }
 }
