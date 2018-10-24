@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\Product;
 use Isics\Bundle\OpenMiamMiamBundle\Entity\ProductInsight;
 
@@ -21,80 +22,24 @@ class FillCompletenessCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $productManager = $this->getContainer()->get('doctrine')->getRepository('IsicsOpenMiamMiamBundle:Product');
-        $products = $productManager->findAll();
-        $completeness = 7;
-        foreach ($products as $db_product)
-        {
-          $product = $productManager->find($db_product->getId());
-          if ($product->getDescription())
-          {
-              $completeness++;
+        $output->writeln('<comment>Computing products insights...</comment>');
+        $output->writeln('');
 
-              if (strlen($product->getDescription()) < 10)
-              {
-                  $insight = new ProductInsight();
-                  $insight->setType("QUALITY");
-                  $insight->setCode(4);
-                  $insight->setProductId($product->getId());
-                  $product->addProductInsight($insight);
-              }
+        $productInsightManager = $this->getContainer()->get('open_miam_miam.product_insight_manager');
 
-              if ($product->getImage())
-              {
-                  $completeness++;
+        $progressBar = new ProgressBar($output, $productInsightManager->count());
+        $progressBar->setBarCharacter('<fg=green>•</>');
+        $progressBar->setEmptyBarCharacter('<fg=red>•</>');
+        $progressBar->setProgressCharacter('<fg=green>➤</>');
+        $progressBar->setFormat(
+            "%memory% %current%/%max% [%bar%] %percent:3s%%\n Elapsed : %elapsed% Remaining : %remaining:-6s%"
+        );
 
-                  // Image quality detection here
+        $callback = function() use ($progressBar) {
+            $progressBar->advance(1);
+        };
 
-                  if ($product->getPriceInfo())
-                  {
-                    $completeness++;
-
-                  } else
-                  {
-                      $output->writeln('No price info provided');
-                  }
-
-              } else
-              {
-                  $insight = new ProductInsight();
-                  $insight->setType("COMPLETENESS");
-                  $insight->setCode(2);
-                  $insight->setProductId($product->getId());
-                  $product->addProductInsight($insight);
-              }
-          } else
-          {
-             $insight = new ProductInsight();
-             $insight->setType("COMPLETENESS");
-             $insight->setCode(1);
-             $insight->setProductId($product->getId());
-             $product->addProductInsight($insight);
-
-             if (!$product->getImage())
-             {
-                 $insight = new ProductInsight();
-                 $insight->setType("COMPLETENESS");
-                 $insight->setCode(2);
-                 $insight->setProductId($product->getId());
-                 $product->addProductInsight($insight);
-             }
-
-             if (!$product->getPriceInfo())
-             {
-                 $insight = new ProductInsight();
-                 $insight->setType("COMPLETENESS");
-                 $insight->setCode(3);
-                 $insight->setProductId($product->getId());
-                 $product->addProductInsight($insight);
-             }
-          }
-          $product->setCompleteness($completeness);
-          $this->getContainer()->get('doctrine')->getManager()->flush();
-          $completeness = 7;
-        }
-
-        $output->writeln("<success> - Finished");
+        $productInsightManager->updateProductInsights($callback);
     }
 
 }
