@@ -126,6 +126,8 @@ class ProductController extends BaseController
         return $this->render('IsicsOpenMiamMiamBundle:Admin\Producer\Product:edit.html.twig', array(
             'producer' => $producer,
             'form' => $form->createView(),
+            'completeness' => $product->getCompleteness(),
+            'insights' => $product->getProductInsights(),
             'activities' => $productManager->getActivities($product)
         ));
     }

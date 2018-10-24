@@ -42,62 +42,35 @@ class ProductInsightManager
     public function updateProductInsights(\Closure $callback = null)
     {
         $productManager = $this->entityManager->getRepository('IsicsOpenMiamMiamBundle:Product');
-        $products = $productManager->findAll();
+        $ids = $productManager->findAllId();
         $completeness = 7;
-        foreach ($products as $db_product) {
-            $product = $productManager->find($db_product->getId());
+        foreach ($ids as $id) {
+            $product = $productManager->findOneBy(["id" => $id[0]['id']]);
             if ($product->getDescription()) {
                 $completeness++;
 
                 if (strlen($product->getDescription()) < 10) {
-                    $insight = new ProductInsight();
-                    $insight->setType("QUALITY");
-                    $insight->setCode(4);
-                    $insight->setProductId($product->getId());
-                    $product->addProductInsight($insight);
+                    $insight = new ProductInsight("QUALITY", 4, $product);
                 }
 
                 if ($product->getImage()) {
                     $completeness++;
 
                     // Image quality detection here
-
-                    if ($product->getPriceInfo()) {
-                        $completeness++;
-                    }
                 } else {
-                    $insight = new ProductInsight();
-                    $insight->setType("COMPLETENESS");
-                    $insight->setCode(2);
-                    $insight->setProductId($product->getId());
-                    $product->addProductInsight($insight);
+                    $insight = new ProductInsight("COMPLETENESS", 2, $product);
                 }
             } else {
-                $insight = new ProductInsight();
-                $insight->setType("COMPLETENESS");
-                $insight->setCode(1);
-                $insight->setProductId($product->getId());
-                $product->addProductInsight($insight);
+                $insight = new ProductInsight("COMPLETENESS", 1, $product);
 
                 if (!$product->getImage()) {
-                    $insight = new ProductInsight();
-                    $insight->setType("COMPLETENESS");
-                    $insight->setCode(2);
-                    $insight->setProductId($product->getId());
-                    $product->addProductInsight($insight);
-                }
-
-                if (!$product->getPriceInfo()) {
-                    $insight = new ProductInsight();
-                    $insight->setType("COMPLETENESS");
-                    $insight->setCode(3);
-                    $insight->setProductId($product->getId());
-                    $product->addProductInsight($insight);
+                    $insight = new ProductInsight("COMPLETENESS", 2, $product);
                 }
             }
             $product->setCompleteness($completeness);
+            $this->entityManager->persist($product);
             $this->entityManager->flush();
-            $completeness = 7;
+            $completeness = 8;
             $callback();
         }
     }

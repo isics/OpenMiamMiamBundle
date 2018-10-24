@@ -196,7 +196,9 @@ class Product
     private $completeness;
 
     /**
-     * @ORM\OneToMany(targetEntity="ProductInsight", mappedBy="product", cascade={"persist"})
+     * @var Doctrine\Common\Collections\Collection $insights
+     *
+     * @ORM\OneToMany(targetEntity="ProductInsight", mappedBy="product", cascade={"persist", "remove"})
      */
     private $insights;
 
@@ -778,13 +780,15 @@ class Product
 
     public function addProductInsight(ProductInsight $insight)
     {
-        $this->insights->add($insight);
+        $this->insights[] = $insight;
+
+        return $this;
     }
 
     /**
      * Get insights
      *
-     * @return ProductInsight[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getProductInsights()
     {
@@ -794,10 +798,10 @@ class Product
     /**
      * Has Insights
      *
-     * @return string
+     * @return integer
      */
     public function hasProductInsights()
     {
-        return "Hello";
+        return 0;
     }
 }

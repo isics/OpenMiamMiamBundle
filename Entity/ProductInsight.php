@@ -3,6 +3,7 @@
 namespace Isics\Bundle\OpenMiamMiamBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Isics\Bundle\OpenMiamMiamBundle\Entity\Product;
 
 /**
  * ProductInsight
@@ -22,11 +23,12 @@ class ProductInsight
     private $id;
 
     /**
-     * @var int
+     * @var Product
      *
-     * @ORM\Column(name="product_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="insights")
+     *
      */
-    private $productId;
+    private $product;
 
     /**
      * @var string
@@ -42,6 +44,13 @@ class ProductInsight
      */
     private $code;
 
+    public function __construct($type, $code, Product $product)
+    {
+        $this->product = $product;
+        $this->code = $code;
+        $this->type = $type;
+        $product->addProductInsight($this);
+    }
 
     /**
      * Get id
@@ -54,12 +63,12 @@ class ProductInsight
     }
 
     /**
-     * Set productId
+     * Set product
      *
-     * @param integer $productId
+     * @param integer $product
      * @return ProductInsight
      */
-    public function setProductId($productId)
+    public function setProduct($productId)
     {
         $this->productId = $productId;
 
@@ -67,11 +76,11 @@ class ProductInsight
     }
 
     /**
-     * Get productId
+     * Get product
      *
      * @return integer
      */
-    public function getProductId()
+    public function getProduct()
     {
         return $this->productId;
     }
