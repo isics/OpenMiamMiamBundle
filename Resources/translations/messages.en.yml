@@ -839,6 +839,11 @@ admin.producer.products.message.created:               "Product has been created
 admin.producer.products.message.updated:               "Product has been modified"
 admin.producer.products.message.deleted:               "Product has been deleted"
 admin.producer.products.delete_dialog.content:         "Are you sure you want to delete product?"
+admin.producer.products.edit.bad_description:          "Tip: The product description quality is bad, you can change it in the part 'Image and description'"
+admin.producer.products.edit.bad_image:                "Tip: The product image quality is bad, you can change it in the part 'Image and description'"
+admin.producer.products.empty_elements:                "Many elements are empty"
+admin.producer.products.empty_description:             "The description is empty"
+admin.producer.products.empty_image:                   "The image is empty"
 
 # Admin / Producer / Calendar
 admin.producer.calendar.title:              "Calendar"
