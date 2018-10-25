@@ -792,16 +792,6 @@ class Product
      */
     public function getProductInsights()
     {
-      return $this->insights;
-    }
-
-    /**
-     * Has Insights
-     *
-     * @return integer
-     */
-    public function hasProductInsights()
-    {
-        return 0;
+        return $this->insights;
     }
 }

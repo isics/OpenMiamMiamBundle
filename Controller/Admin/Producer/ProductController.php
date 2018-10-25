@@ -67,12 +67,14 @@ class ProductController extends BaseController
         $this->secure($producer);
 
         $productManager = $this->get('open_miam_miam.product_manager');
+        $productInsightsManager = $this->get('open_miam_miam.product_insight_manager');
         $product = $productManager->createForProducer($producer);
 
         $form = $this->getForm($product);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                $productInsightsManager->createProductInsight($product);
                 $productManager->save($product, $this->get('security.token_storage')->getToken()->getUser());
 
                 $this->get('session')->getFlashBag()->add('notice', 'admin.producer.products.message.created');
@@ -107,11 +109,13 @@ class ProductController extends BaseController
         $this->secureProduct($producer, $product);
 
         $productManager = $this->get('open_miam_miam.product_manager');
+        $productInsightsManager = $this->get('open_miam_miam.product_insight_manager');
 
         $form = $this->getForm($product);
         if ($request->isMethod('POST')) {
             $form->handleRequest($request);
             if ($form->isValid()) {
+                $productInsightsManager->createProductInsight($product);
                 $productManager->save($product, $this->get('security.token_storage')->getToken()->getUser());
 
                 $this->get('session')->getFlashBag()->add('notice', 'admin.producer.products.message.updated');

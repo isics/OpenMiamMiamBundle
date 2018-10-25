@@ -43,7 +43,7 @@ class ProductInsightManager
     {
         $productManager = $this->entityManager->getRepository('IsicsOpenMiamMiamBundle:Product');
         $ids = $productManager->findAllId();
-        $completeness = 7;
+        $completeness = 8;
         foreach ($ids as $id) {
             $product = $productManager->findOneBy(["id" => $id[0]['id']]);
             if ($product->getDescription()) {
@@ -75,6 +75,42 @@ class ProductInsightManager
         }
     }
 
+    /**
+     * Create the product insights
+     * @param \Isics\Bundle\OpenMiamMiamBundle\Entity\Product $product
+     */
+    public function createProductInsight(\Isics\Bundle\OpenMiamMiamBundle\Entity\Product $product)
+    {
+        $completeness = 8;
+        $insights = $product->getProductInsights();
+
+        foreach ($insights as $insight)
+        {
+            $this->entityManager->remove($insight);
+        }
+
+        if (!$product->getDescription())
+        {
+            $insight = new ProductInsight("COMPLETENESS", 1, $product);
+        } else {
+            $completeness ++;
+
+            if(strlen($product->getDescription()) < 10)
+            {
+                $insight = new ProductInsight("QUALITY", 4, $product);
+            }
+        }
+
+        if(!$product->getImage())
+        {
+            $insight = new ProductInsight("COMPLETENESS", 2, $product);
+        } else {
+            $completeness++;
+        }
+
+        $product->setCompleteness($completeness);
+        $completeness = 8;
+    }
     /**
      * Return the count of products
      *

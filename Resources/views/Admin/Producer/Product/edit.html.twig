@@ -22,7 +22,7 @@
               {% endif %}
             {% endfor %}
         {% if completeness < 10 %}
-            <p><a data-toggle="collapse" href="#footwear" aria-expanded="false" aria-controls="footwear">{{ 'admin.producer.products.edit..empty_elements' |trans }} ({{ 10 - completeness }})</a></p>
+            <p><a data-toggle="collapse" href="#footwear" aria-expanded="false" aria-controls="footwear">{{ 'admin.producer.products.edit.empty_elements' |trans }} ({{ 10 - completeness }})</a></p>
             <div class="collapse" id="footwear">
               <ul>
                 {% for insight in insights %}
