@@ -84,25 +84,21 @@ class ProductInsightManager
         $completeness = 8;
         $insights = $product->getProductInsights();
 
-        foreach ($insights as $insight)
-        {
+        foreach ($insights as $insight) {
             $this->entityManager->remove($insight);
         }
 
-        if (!$product->getDescription())
-        {
+        if (!$product->getDescription()) {
             $insight = new ProductInsight("COMPLETENESS", 1, $product);
         } else {
             $completeness ++;
 
-            if(strlen($product->getDescription()) < 10)
-            {
+            if(strlen($product->getDescription()) < 10) {
                 $insight = new ProductInsight("QUALITY", 4, $product);
             }
         }
 
-        if(!$product->getImage())
-        {
+        if(!$product->getImage()) {
             $insight = new ProductInsight("COMPLETENESS", 2, $product);
         } else {
             $completeness++;
