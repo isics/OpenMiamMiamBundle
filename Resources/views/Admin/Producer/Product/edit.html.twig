@@ -15,22 +15,22 @@
     <div class="alert alert-warning row" role="alert">
         <div class="col-md-6">
             {% for insight in insights %}
-              {% if insight.getCode() == 4 %}
-                <span class="glyphicon glyphicon-info-sign" style="color: #FFA500;"></span> {{ 'admin.producer.products.edit.bad_description' |trans }}<br><br>
-              {% elseif insight.getCode() == 3 %}
-                <span class="glyphicon glyphicon-info-sign" style="color: #FFA500;"></span> {{ 'admin.producer.products.edit.bad_image' |trans }}<br><br>
-              {% endif %}
+                {% if insight.getCode() == 4 %}
+                    <span class="glyphicon glyphicon-info-sign" style="color: #FFA500;"></span> {{ 'admin.producer.products.edit.bad_description' |trans }}<br><br>
+                 {% elseif insight.getCode() == 3 %}
+                    <span class="glyphicon glyphicon-info-sign" style="color: #FFA500;"></span> {{ 'admin.producer.products.edit.bad_image' |trans }}<br><br>
+                 {% endif %}
             {% endfor %}
         {% if completeness < 10 %}
             <p><a data-toggle="collapse" href="#footwear" aria-expanded="false" aria-controls="footwear">{{ 'admin.producer.products.edit.empty_elements' |trans }} ({{ 10 - completeness }})</a></p>
             <div class="collapse" id="footwear">
               <ul>
                 {% for insight in insights %}
-                  {% if insight.code == 1 %}
-                    <li>{{ 'admin.producer.products.edit.empty_description' |trans }}</li>
-                  {% elseif insight.code == 2 %}
-                    <li>{{ 'admin.producer.products.edit.empty_image' |trans }}</li>
-                  {% endif %}
+                     {% if insight.code == 1 %}
+                         <li>{{ 'admin.producer.products.edit.empty_description' |trans }}</li>
+                      {% elseif insight.code == 2 %}
+                         <li>{{ 'admin.producer.products.edit.empty_image' |trans }}</li>
+                      {% endif %}
                 {% endfor %}
               </ul>
             </div>
