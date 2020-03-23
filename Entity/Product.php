@@ -188,6 +188,19 @@ class Product
      */
     private $branches;
 
+    /**
+      * @var integer $completeness
+      *
+      * @ORM\Column(name="completeness", type="integer", nullable=true)
+      */
+    private $completeness;
+
+    /**
+     * @var Doctrine\Common\Collections\Collection $insights
+     *
+     * @ORM\OneToMany(targetEntity="ProductInsight", mappedBy="product", cascade={"persist", "remove"})
+     */
+    private $insights;
 
     /**
      * Constructor
@@ -201,6 +214,8 @@ class Product
         $this->availability         = self::AVAILABILITY_AVAILABLE;
         $this->hasNoPrice           = (null === $this->id) ? false : (null === $this->price);
         $this->branches             = new ArrayCollection();
+        $this->completeness         = 7;
+        $this->insights             = new ArrayCollection();
     }
 
     /**
@@ -737,5 +752,46 @@ class Product
         }
 
         return false;
+    }
+
+    /**
+     * Set completeness
+     *
+     * @param integer $completeness
+     *
+     * @return Product
+     */
+    public function setCompleteness($completeness)
+    {
+        $this->completeness = $completeness;
+
+        return $this;
+    }
+
+    /**
+     * Get completeness
+     *
+     * @return integer
+     */
+    public function getCompleteness()
+    {
+        return $this->completeness;
+    }
+
+    public function addProductInsight(ProductInsight $insight)
+    {
+        $this->insights[] = $insight;
+
+        return $this;
+    }
+
+    /**
+     * Get insights
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProductInsights()
+    {
+        return $this->insights;
     }
 }
